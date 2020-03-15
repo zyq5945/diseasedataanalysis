@@ -9,9 +9,11 @@ diseasedataanalysis是一个对疾病数据进行分析查看的HTML5网页项�
 
 本项目使用[d3.js](https://d3js.org/)进行数据显示，使用了一些javascript高版本API，无法保证对各浏览器的兼容性，若显示有问题，请使用最新版本的Chrome或者Firefox浏览器来浏览。
 
-## 2.[疾病数据查看分析主页](https://zyq5945.github.io/diseasedataanalysis/overview.html)
+## 2.疾病数据查看分析主页
 
+[github.io 疾病数据查看分析主页](https://zyq5945.github.io/diseasedataanalysis/overview.html)
 
+[gitee.io 疾病数据查看分析主页](https://zyq5945.gitee.io/diseasedataanalysis/overview.html)
 
 ## 3.不同的数据地址
 
