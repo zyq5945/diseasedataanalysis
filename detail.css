@@ -1,0 +1,32 @@
+
+#simulate {
+    display: None;
+}
+
+.title {
+    font-weight: bold;
+    border-bottom: 1px solid #111;
+    text-align: center;
+}
+
+.legendText {
+    display: inline-block;
+    font-size: 13px;
+    padding: 2px 2px 2px 20px;
+}
+
+.legendText input {
+    width: auto;
+}
+
+#input button {
+    width: 120px;
+}
+
+.childDiv {
+    display: inline-block;
+    margin: 0 0;
+    padding: 0 0;
+    width: 100%;
+    border: 0;
+}

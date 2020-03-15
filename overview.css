@@ -1,0 +1,43 @@
+
+.childDiv {
+    display: inline-block;
+    margin: 0 0;
+    padding:  0 0;
+    width: 50%;
+    border: 0;
+}
+
+ table {
+    text-align: center;
+ }
+
+ caption {
+    font-weight: bold;
+    border-bottom: 1px solid #111;
+ }
+
+ .Frame{
+    width: auto;
+ }
+
+ .option {
+    text-align: center;
+ }
+
+ .option button{
+    width: 110px;
+ }
+
+#divFrame{
+    height: auto;
+}
+
+iframe {
+    display: block;
+    width: 100%;
+    height: 1000px;
+}
+
+input[name="DataUrl"] {
+    width :380px;
+}

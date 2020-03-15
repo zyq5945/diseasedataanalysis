@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>疾病情况</title>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="bookmark" href="favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="detail.css">
+</head>
+
+<body>
+    <div id="loading">数据加载中，请稍等...</div>
+    <div class="title"><span id="title"></span></div>
+    <div id="input">
+        <span class="label">开始天数偏差: </span>
+        <input class="value" type="text" name="MinDay" />&nbsp;
+        <span class="label">结束天数偏差: </span>
+        <input class="value" type="text" name="MaxDay" />&nbsp;
+        <div id="simulate">
+            <span class="label">仿真治疗天数: </span>
+            <input class="value" type="text" name="DaysOfTreatment" />&nbsp;
+            <span class="label">仿真康复A1: </span>
+            <input class="value" type="text" name="A1" />&nbsp;
+            <span class="label">仿真康复A2: </span>
+            <input class="value" type="text" name="A2" />&nbsp;
+            <span class="label">仿真康复x0: </span>
+            <input class="value" type="text" name="X0" />&nbsp;
+            <span class="label">仿真康复dx: </span>
+            <input class="value" type="text" name="Dx" />&nbsp;
+            <span class="label">仿真死亡k: </span>
+            <input class="value" type="text" name="K" />&nbsp;
+            <span class="label">仿真死亡b: </span>
+            <input class="value" type="text" name="B" />&nbsp;&nbsp;
+        </div>
+        <button id="btnShow">显 示[Enter]</button>
+        <button id="btnClear">清 空</button>
+    </div>
+    <div id="ChartSelect" class="divSelect">
+        <button class="btnAllSelect">全 选</button>
+        <button class="btnUnSelect">全 消</button>
+        <button class="btnReverse">反 选</button>
+    </div>
+    <div id="root"></div>
+
+</body>
+<script src="3rdlib/jquery-3.3.1.min.js"></script>
+<script src="3rdlib/d3.min.js"></script>
+<script src="3rdlib/url.min.js"></script>
+<script src="3rdlib/jdataexchange.js"></script>
+<script src="common.js"></script>
+<script src="dataitem.js"></script>
+<script src="detail.js"></script>
+</html>

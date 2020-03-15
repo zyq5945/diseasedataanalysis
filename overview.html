@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>疾病数据查看分析</title>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="bookmark" href="favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="3rdlib/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="3rdlib/jquery.dataTables.my.css">
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="overview.css">
+</head>
+
+<body>
+    <div id="loading">数据加载中，请稍等...</div>
+    <div id="load">
+        <span class="label">数据地址: </span>
+        <input class="value" name="DataUrl" />&nbsp;
+        <span class="label">开始日期: </span>
+        <input class="value" name="StartTime" />
+        <span class="label">开始天数偏差: </span>
+        <input class="value" name="MinDay" />&nbsp;
+        <span class="label">结束天数偏差: </span>
+        <input class="value" name="MaxDay" />&nbsp;
+        <span class="label">仿真治疗天数: </span>
+        <input class="value" name="DaysOfTreatment" />&nbsp;
+        <span class="label">图形宽度: </span>
+        <input class="value" name="Width" />&nbsp;
+        <span class="label">图形高度: </span>
+        <input class="value" name="Height" />
+        <button id="btnLoad" accesskey="Q">加载数据(<span class="hotKey">Q</span>)</button>
+    </div>
+
+
+    <div id="root">
+        <table id="Total" class="display" style="width:100%">
+            <caption> 总计 </caption>
+        </table>
+        <br/>
+        <div class="option">
+            <label>
+                <input class="Frame" name="Frame" type="checkbox" />
+                <span class="label">在本页下方显示数据</span>
+            </label>
+            <button class="btnOption" name="Detail" accesskey="A">详 情(<span class="hotKey">A</span>)</button>
+            <button class="btnOption" name="Compare" accesskey="C">对 比(<span class="hotKey">C</span>)</button>
+            <button class="btnOption" name="Simulate" accesskey="S">仿 真(<span class="hotKey">S</span>)</button>
+            <button class="btnClsSel" accesskey="W">清除选择(<span class="hotKey">W</span>)</button>
+        </div>
+        <br/>
+
+        <div id="LastParentsName" class="divSelect">
+            <button class="btnAllSelect">全 选</button>
+            <button class="btnUnSelect">全 消</button>
+            <button class="btnReverse">反 选</button>
+        </div>
+        <table id="LastParents" name="LastParentsName" class="display" style="width:100%">
+            <caption> 最后更新省份数据 </caption>
+        </table>
+        <br/>
+        <br/>
+        <div id="LastChildrenName" class="divSelect">
+            <button class="btnAllSelect">全 选</button>
+            <button class="btnUnSelect">全 消</button>
+            <button class="btnReverse">反 选</button>
+        </div>
+        <table id="LastChildren" name="LastChildrenName" class="display" style="width:100%" data-page-length="25" >
+            <caption> 最后更新市区数据 </caption>
+        </table>
+        <br/>
+
+        <br/>
+    </div>
+
+    <div id="divFrame">
+    </div>
+</body>
+<script src="3rdlib/jquery-3.3.1.min.js"></script>
+<script src="3rdlib/jquery.dataTables.min.js"></script>
+<script src="3rdlib/d3.min.js"></script>
+<script src="3rdlib/url.min.js"></script>
+<script src="3rdlib/jdataexchange.js"></script>
+<script src="common.js"></script>
+<script src="overview.js"></script>
+
+</html>
