@@ -267,11 +267,11 @@ $.fn.dataTable.ext.search.push(
 );
 
 
-$(document).ready(function() {
-
+function init() {
     Object.assign(Params, Storage.get("cfg", {}), Url.parseQuery());
     IsFrame = Storage.get("IsFrame", false);
 
+    var chkFrame = $("input.Frame");
     chkFrame.prop('checked', IsFrame);
     jdxLoad.set(Params);
 
@@ -283,7 +283,7 @@ $(document).ready(function() {
     $(".btnClsSel").click(function() {
         $("tr").removeClass('selected');
     });
-    var chkFrame = $("input.Frame");
+
     chkFrame.click(function() {
         var status = $(this).is(':checked');
         chkFrame.prop('checked', status);
@@ -292,4 +292,10 @@ $(document).ready(function() {
     });
 
     load_data();
+}
+
+
+$(document).ready(function() {
+
+    init();
 });

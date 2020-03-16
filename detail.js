@@ -493,12 +493,14 @@ function createChildren(data) {
 
 }
 
-
-$(document).ready(function () {
-
+function init() {
     var query = Url.parseQuery();
     Object.assign(Params, query);
+    jdx("input").set(Params);
     var urls = getAllUrls();
     jqueryBatchAjax(urls, createChildren);
-    jdx("input").set(Params);
+}
+
+$(document).ready(function () {
+    init();
 });
