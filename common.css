@@ -9,6 +9,22 @@ button {
     font: 600 13px system-ui;
 }
 
+div.about {
+    float: right;
+}
+
+.title {
+    font-weight: bold;
+    border-bottom: 1px solid #111;
+    text-align: center;
+    line-height: 200%
+}
+
+#title {
+    font: 600 22px system-ui;
+}
+
+
 input.chkDiv {
     width: auto;
 }
