@@ -21,13 +21,13 @@ diseasedataanalysis是一个对疾病数据进行分析查看的HTML5网页项�
 
 针对可能对不同网站访问速度有快慢问题，酌情可以考虑以下最快的访问地址：
 
-#### github.io 网站[https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON](overview.html?DataUrl=https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON/data)
+#### github.io 网站[https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON](https://zyq5945.github.io/diseasedataanalysis/overview.html?DataUrl=https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON/data)
 
 #### github.com 仓库[https://raw.githubusercontent.com/zyq5945/DXY-COVID-19-Data-Arrange-DJSON/master/data](https://raw.githubusercontent.com/zyq5945/DXY-COVID-19-Data-Arrange-DJSON/master/data)
 
 #### gitee.com 仓库[https://gitee.com/zyq5945/DXY-COVID-19-Data-Arrange-DJSON/raw/master/data](https://gitee.com/zyq5945/DXY-COVID-19-Data-Arrange-DJSON/raw/master/data)
 
-#### gitee.io 网站[https://zyq5945.gitee.io/dxy-covid-19-data-arrange-djson/data](overview.html?DataUrl=https://zyq5945.gitee.io/dxy-covid-19-data-arrange-djson/data)
+#### gitee.io 网站[https://zyq5945.gitee.io/dxy-covid-19-data-arrange-djson/data](https://zyq5945.gitee.io/diseasedataanalysis/overview.html?DataUrl=https://zyq5945.gitee.io/dxy-covid-19-data-arrange-djson/data)
 
 可能访问有的数据地址是无法获取数据的，是因为通常情况下浏览器会因CORS安全机制问题，使得所有请求的未加Access-Control-Allow-Origin标识的数据都会失败。若仍需要访问其他数据地址，请下载代码后新建Chrome浏览器的快捷方式，修改其目标参数类似如下来进行浏览：
 

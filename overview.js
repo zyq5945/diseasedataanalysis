@@ -272,6 +272,9 @@ $(document).ready(function() {
     Object.assign(Params, Storage.get("cfg", {}), Url.parseQuery());
     IsFrame = Storage.get("IsFrame", false);
 
+    chkFrame.prop('checked', IsFrame);
+    jdxLoad.set(Params);
+
     $("#btnLoad").click(loadClick);
     $(".btnOption").click(function() {
         var type = this.name;
@@ -287,7 +290,6 @@ $(document).ready(function() {
         IsFrame = status;
         Storage.set("IsFrame", IsFrame);
     });
-    chkFrame.prop('checked', IsFrame);
-    jdxLoad.set(Params);
+
     load_data();
 });
