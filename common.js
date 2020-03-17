@@ -16,26 +16,47 @@ function arrayMap(a, cb = function(x) {return x;}) {
     return r;
 }
 
+function arrayUnique(a, cb = function(x) {return x;}) {
+    var len = a.length;
+    var r = [];
+    for (var i=0; i<len; i++) {
+        var v = cb.call(this, a[i], i, a);
+        if (!r.includes(v)) {
+             r.push(v);
+        }
+    }
+    return r;
+}
+
+
+function windowCall(cb, timer = 0) {
+    setTimeout(cb.call(window), timer);
+}
+
 function jqueryBatchAjax(urls, success, error = null) {
     loadingShow();
     return $.when.apply(this, urls.map(x => $.ajax({type: 'get',url: x, dataType: 'json',crossDomain: true})))
         .then(function() {
             var v = arguments;
             var ret = urls.length == 1? [v[0]]: arrayMap(arguments, function(x) {return x[0];});
-            success(ret);
+
             loadingHide();
+            windowCall(function() {
+                success(ret);
+            });
         },
         function(err) {
-            console.error("---jqueryBatchAjax error---:",err)
+            console.error("---jqueryBatchAjax error---:",err);
+            loadingHide();
             if (error != null) {
                 var msg = ` status:${err.status}\n readyState:${err.readyState}\n statusText:${err.statusText}`;
-                error(msg);
+                windowCall(function() {
+                    error(msg);
+                });
             }
-            loadingHide();
         })
 }
 
-$.ajaxSetup({cache:false});
 
 function objectValuesToNumber(obj) {
     for (var key in obj) {
@@ -149,6 +170,28 @@ function btnSelectClick(id, cb) {
     });
 }
 
+function d3BtnSelectClick(node, cb) {
+    var list = node.selectAll(`input[type='checkbox']`);
+    node.select(`.btnAllSelect`).on("click", function() {
+        list.each(function() {
+            this.checked = true;
+        });
+        cb.call(this);
+    });
+    node.select(`.btnUnSelect`).on("click", function() {
+        list.each(function() {
+            this.checked = false;
+        });
+        cb.call(this);
+    });
+    node.select(`.btnReverse`).on("click", function() {
+        list.each(function() {
+            this.checked = !this.checked;
+        });
+        cb.call(this);
+    });
+}
+
 function divSelectClick(id, names, cb, storeName = null) {
     var cc = initCheckboxs(id, names, storeName);
 
@@ -157,7 +200,8 @@ function divSelectClick(id, names, cb, storeName = null) {
         cb.call(this, data, names);
     };
 
-    btnSelectClick(`#${id}`, reCall);
+    var node = d3.select(`#${id}`);
+    d3BtnSelectClick(node, reCall);
 
-    $(`#${id} input:checkbox`).off("click").on("click", reCall);
+    node.selectAll(`input[type='checkbox']`).on("click", reCall);
 }

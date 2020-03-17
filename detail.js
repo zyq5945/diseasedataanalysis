@@ -65,7 +65,7 @@ var TypeCompare = [
 
 var Params = {
     Type: "Simulate", // Simulate Compare Detail
-    DataUrl:"http://127.0.0.1:8081/data/", //'https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON/data/ParentDetail/湖北.json'
+    DataUrl:"http://127.0.0.1:8081/data", //'https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON/data'
     Name: "湖北",
     Parents: "湖北,广东",
     Children: "湖北-荆门,湖北-襄阳,广东-广州,广东-深圳",
@@ -200,9 +200,9 @@ function tipCallback(g, value){
   path.attr("d", `M${-w / 2 - 10},5H-5l5,-5l5,5H${w / 2 + 10}v${h + 20}h-${w + 20}z`);
 }
 
-function initD3Tip(svg, x, y, cb) {
+function initD3Tip(svg, optional, x, y, cb) {
     const tooltip = svg.append("g");
-    svg.on("touchmove mousemove", function() {
+    svg.on(`touchmove${optional} mousemove${optional}`, function() {
         var m = d3.mouse(this);
         var mx = m[0];
         var my = m[1];
@@ -215,11 +215,11 @@ function initD3Tip(svg, x, y, cb) {
             .call(tipCallback, cb(mX, mY));
     });
 
-    svg.on("touchend mouseleave", () => tooltip.call(tipCallback, null));
+    svg.on(`touchend${optional} mouseleave${optional}`, () => tooltip.call(tipCallback, null));
 
 }
 
-function simpleShow(root, data1, data2, group, params, sCount, cb_line, cb_legend) {
+function simpleShow(root, data1, data2, group, groupIndex, params, sCount, cb_line, cb_legend) {
 
   var key = group.title;
   var yNames = group.data.map(x=> x.data);
@@ -283,13 +283,13 @@ function simpleShow(root, data1, data2, group, params, sCount, cb_line, cb_legen
         .attr("font-weight", "bold")
         .text(key));
 
-  cb_legend(node, viewBox, margin1, key, yNames, yTitles);
+  cb_legend(node, viewBox, margin1, key, groupIndex, yNames, yTitles);
 
   var viewBox = [0, 0, width, height1];
   const svg = node
         .append("svg")
         .attr("class", "svg")
-        .attr("viewBox", [0, 0, width, height1]);
+        .attr("viewBox", viewBox);
 
   svg.append("g")
       .call(xAxis1);
@@ -313,8 +313,7 @@ function simpleShow(root, data1, data2, group, params, sCount, cb_line, cb_legen
       });
   }
 
-    var t1=params.StartTime;
-    var dateBegin = new Date(t1.replace(/-/g, "/"));
+  var dateBegin = new Date(params.StartTime.replace(/-/g, "/"));
   function xyPrint(x, y) {
         var sX = x.toFixed(0);
         var n = 0;
@@ -335,7 +334,7 @@ function simpleShow(root, data1, data2, group, params, sCount, cb_line, cb_legen
         return `X:${sX}\nY:${sY}\n${(date.getMonth()+1)}/${(date.getDate())}`;
   }
 
-  initD3Tip(svg, xx1, yy1, xyPrint);
+  initD3Tip(svg, ".tooltip", xx1, yy1, xyPrint);
 
   linesCreator(data1, "detail");
   linesCreator(data2, "simulate");
@@ -406,22 +405,37 @@ function createChildren(data) {
             .call(f);
     }
 
-    function cb_legend(parent, viewBox, margin, key, yNames, yTitles) {
+    var templateBtns = $("#ChartSelect")[0].innerHTML;
+    function cb_legend(parent, viewBox, margin, key, groupIndex, yNames, yTitles) {
         var names =isCompare ? urlNames : yTitles;
         var prop = "data-name";
+        //var id = `line_${groupIndex}`;
         var node = parent.append("div")
-            .selectAll("label")
+            //.attr("id", id)
+            .attr("class", "lineSelect");
+
+        node.html(templateBtns);
+
+        node.selectAll("label")
             .data(names)
             .join("label")
             .attr("class", "legendText")
             .html((d,i)=> `<input name=${d} type="checkbox" checked="checked"/><span style="color:${colors(i)}">&#9608;</span><span>${d}</span> `);
 
-        node.selectAll("input").on("click", function() {
+
+        function checkboxClick() {
             var name = this.name;
             var show = this.checked? "visible":"hidden";
             parent.selectAll(`path[${prop}=${name}]`)
                 .attr("visibility", show);
+        }
+        var allCheckbox = parent.selectAll("input");
+        allCheckbox.on("click", checkboxClick);
+
+        d3BtnSelectClick(parent, function() {
+            allCheckbox.each(checkboxClick);
         });
+
     }
 
 
@@ -434,10 +448,10 @@ function createChildren(data) {
 
     var keys = groups.map(x=> x.title);
     function chartSelectClick(data) {
-        $(`div.childDiv`).each(function() {
-            var node = $(this);
+        d3.selectAll(`div.childDiv`).each(function() {
+            var node = d3.select(this);
             var name = node.attr("name");
-            node.css('display',data.includes(name)? 'inline-block': 'none');
+            node.style('display',data.includes(name)? 'inline-block': 'none');
         });
     };
 
@@ -476,7 +490,7 @@ function createChildren(data) {
 
         clearClick();
 
-        groups.forEach(group => simpleShow(root, data, sData, group, params, sCount, cb_line, cb_legend));
+        groups.forEach((group, groupIndex) => simpleShow(root, data, sData, group, groupIndex, params, sCount, cb_line, cb_legend));
 
         chartSelectClick(window[storeName]);
     };
@@ -494,6 +508,9 @@ function createChildren(data) {
 }
 
 function init() {
+
+    $.ajaxSetup({cache:false});
+
     var query = Url.parseQuery();
     Object.assign(Params, query);
     jdx("input").set(Params);

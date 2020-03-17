@@ -39,7 +39,6 @@ div.divSelect button{
 }
 
 #loading {
-    display: None;
     color: #FF6666;
     text-align: center;
     font: 600 20px system-ui;

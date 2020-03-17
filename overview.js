@@ -90,7 +90,6 @@ function fetch_data(data) {
     var dataLastParents = data[1];
     var dataLastChildren = data[2];
 
-    var names = dataLastParents.map(x=> x.ParentName).sort(nameCompare);
 
     function createTableDrawCb(n) {
         return function () {
@@ -100,8 +99,9 @@ function fetch_data(data) {
             }
         }
     };
-
+    var names = dataLastParents.map(x=> x.ParentName).sort(nameCompare);
     divSelectClick("LastParentsName", names, createTableDrawCb(1), "LastParentsName");
+    names = arrayUnique(dataLastChildren.map(x=> x.ParentName)).sort(nameCompare);
     divSelectClick("LastChildrenName", names, createTableDrawCb(2), "LastChildrenName");
 
     var tbl_order = 3;
@@ -120,10 +120,11 @@ function fetch_data(data) {
         }});
 
     var table_lps =  $('#LastParents').DataTable({
-        "paging":   false,
+        "paging":   true,
         "ordering": true,
-        "info":     false,
+        "info":     true,
         "searching": true,
+        //"stateSave" : true,
         "order": [[ tbl_order, "desc" ]],
         columns : columns,
         data : dataLastParents,
@@ -268,6 +269,9 @@ $.fn.dataTable.ext.search.push(
 
 
 function init() {
+
+    $.ajaxSetup({cache:false});
+
     Object.assign(Params, Storage.get("cfg", {}), Url.parseQuery());
     IsFrame = Storage.get("IsFrame", false);
 
