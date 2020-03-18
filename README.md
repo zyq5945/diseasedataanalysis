@@ -17,6 +17,10 @@ diseasedataanalysis是一个对疾病数据进行分析查看的HTML5网页项�
 
 ## 3.不同的数据地址
 
+所有的数据地址都必须保证在浏览器中输入“数据地址+/Total.json”都能顺利返回[diseasedataarrange整理且符合本程序使用规范的JSON数据](https://zyq5945.github.io/diseasedataarrange)，否则就是错误的数据地址。
+
+比如：https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON/data/Total.json
+
 ### 3.1 中国COVID-19(2019-nCov/新型冠状病毒)数据
 
 针对可能对不同网站访问速度有快慢问题，酌情可以考虑以下最快的访问地址：
@@ -32,6 +36,7 @@ diseasedataanalysis是一个对疾病数据进行分析查看的HTML5网页项�
 
 可能访问有的数据地址是无法获取数据的，是因通常情况下浏览器会因CORS安全机制问题，使得所有请求的未加Access-Control-Allow-Origin标识的数据都会失败。若仍需要访问其他数据地址，请下载代码后新建Chrome浏览器的快捷方式，修改其目标参数类似如下来进行浏览：
 
+注：数据计算的开始时间点是2020-01-24。
 
 ```
 "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" "C:\project\html\diseasedataanalysis\overview.html" --disable-web-security --user-data-dir="C:\temp\chrome"
@@ -61,8 +66,32 @@ location /data {
 
 ```
 
-数据地址：http://nginx绑定IP:nginx绑定端口/data
+这样配置后的数据地址是这样的：http://nginx绑定IP:nginx绑定端口/data
 
+比如：http://127.0.0.1:80/data
+
+### 3.3 [2003年中国SARS（非典）数据](https://zyq5945.github.io/zyq5945/blog_10.html)
+
+#### github.io 网站：[https://zyq5945.github.io/SARS-Data-Arrange/china](https://zyq5945.github.io/diseasedataanalysis/overview.html?StartTime=2003/4/22&MinDay=-116&MaxDay=120&DaysOfTreatment=32&DataUrl=https://zyq5945.github.io/SARS-Data-Arrange/china)
+
+#### github.com 仓库：https://raw.githubusercontent.com/zyq5945/SARS-Data-Arrange/master/china
+
+
+注：数据计算的开始时间点是2003/4/22。
+
+注：其中子区域的死亡数重新映射为医疗人员病例数，想要查看医疗人员感染情况请自行将关系对应好。
+
+
+### 3.4 [WHO全球SARS（非典）总计数据](https://www.who.int/csr/sars/country/table2004_04_21/en/)
+
+#### github.io 网站：[https://zyq5945.github.io/SARS-Data-Arrange/area](https://zyq5945.github.io/diseasedataanalysis/overview.html?DataUrl=https://zyq5945.github.io/SARS-Data-Arrange/area)
+
+#### github.com 仓库：https://raw.githubusercontent.com/zyq5945/SARS-Data-Arrange/master/area
+
+
+注：数据计算的开始时间点是2003-02-27。
+
+注：该数据没有详情/对比/仿真页面数据。
 
 ## 4.页面说明
 
