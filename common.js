@@ -68,7 +68,10 @@ function objectValuesToNumber(obj) {
 }
 
 function isValidNum(v) {
-    return !isNaN(v) && isFinite(v);
+    return v!== null
+        && v!== undefined
+        && !isNaN(v)
+        && isFinite(v);
 }
 
 
