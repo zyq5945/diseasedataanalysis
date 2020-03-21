@@ -84,6 +84,34 @@ function fetch_data(data) {
         }
     }
 
+    function fmtNum(tds, indexs, cols, data) {
+        indexs.forEach(i=> {
+            var v = data[cols[i].data];
+            if (isValidNum(v)) {
+                if (v<1) {
+                    v = Math.round(v * 1000) / 1000;
+                }
+                else {
+                    v = Math.round(v * 100) / 100;
+                }
+
+                tds.eq(i).text(`${v}`);
+            }
+
+        })
+    }
+
+    function createdRow(columns, tbl_order , tbl_offset) {
+
+        var idx = tbl_order + tbl_offset;
+        var idxs = [0, idx + 3, idx + 4];
+        return function(row, data, index) {
+            var tds = $('td', row);
+            fmtRate(tds, idx, columns, data);
+            fmtNum(tds, idxs, columns, data);
+        }
+    }
+
     var columns_p = Columns_Parent;
     var columns_c = Columns_Child;
     var dataTotal = data[0];
@@ -104,6 +132,7 @@ function fetch_data(data) {
     names = arrayUnique(dataLastChildren.map(x=> x.ParentName)).sort(nameCompare);
     divSelectClick("LastChildrenName", names, createTableDrawCb(2), "LastChildrenName");
 
+
     var tbl_order = 3;
     var tbl_offset = 4;
     var columns = columns_p;
@@ -115,9 +144,7 @@ function fetch_data(data) {
         //"order": [[ tbl_order, "desc" ]],
         columns : columns,
         data : dataTotal,
-        createdRow : function ( row, data, index ) {
-            fmtRate($('td', row), tbl_order+ tbl_offset, columns, data);
-        }});
+        createdRow : createdRow(columns, tbl_order, tbl_offset)});
 
     var table_lps =  $('#LastParents').DataTable({
         "paging":   true,
@@ -128,9 +155,7 @@ function fetch_data(data) {
         "order": [[ tbl_order, "desc" ]],
         columns : columns,
         data : dataLastParents,
-        createdRow : function ( row, data, index ) {
-            fmtRate($('td', row), tbl_order+ tbl_offset, columns, data);
-        }});
+        createdRow : createdRow(columns, tbl_order, tbl_offset)});
 
     tbl_order = 4;
     columns = columns_c;
@@ -143,9 +168,7 @@ function fetch_data(data) {
         "order": [[ tbl_order, "desc" ]],
         columns : columns,
         data : dataLastChildren,
-        createdRow : function ( row, data, index ) {
-            fmtRate($('td', row), tbl_order+ tbl_offset, columns, data);
-        }});
+        createdRow : createdRow(columns, tbl_order, tbl_offset)});
 
     Tables = [table_tps, table_lps, table_lcs];
 
