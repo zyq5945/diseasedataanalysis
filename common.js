@@ -57,21 +57,26 @@ function jqueryBatchAjax(urls, success, error = null) {
         })
 }
 
+function isValidNum(v) {
+    return v != ""
+        && v != null
+        && v != undefined
+        && !isNaN(v)
+        && isFinite(v);
+}
+
 
 function objectValuesToNumber(obj) {
     for (var key in obj) {
-        var val = new Number(obj[key]);
+        var v = obj[key];
+        if (!isValidNum(v)) {
+            continue;
+        }
+        var val = new Number(v);
         if (!isNaN(val)) {
             obj[key] = val;
         }
     }
-}
-
-function isValidNum(v) {
-    return v!== null
-        && v!== undefined
-        && !isNaN(v)
-        && isFinite(v);
 }
 
 

@@ -2,7 +2,7 @@
 var Columns_Parent =[
     { "title":"天差", "data": "TimeOffset" },
     { "title":"更新时间", "data": "UpdateTime" },
-    { "title":"名称", "data": "ParentName" },
+    { "title":"地区", "data": "ParentName" },
     { "title":"确诊数", "data": "ParentConfirmedCount" },
     { "title":"康复数", "data": "ParentCuredCount" },
     { "title":"死亡数", "data": "ParentDeadCount" },
@@ -18,8 +18,8 @@ var Columns_Parent =[
 var Columns_Child =[
     { "title":"天差", "data": "TimeOffset" },
     { "title":"更新时间", "data": "UpdateTime" },
-    { "title":"省份", "data": "ParentName" },
-    { "title":"市区", "data": "ChildName" },
+    { "title":"地区", "data": "ParentName" },
+    { "title":"子地区", "data": "ChildName" },
     { "title":"确诊数", "data": "ChildConfirmedCount" },
     { "title":"康复数", "data": "ChildCuredCount" },
     { "title":"死亡数", "data": "ChildDeadCount" },
@@ -51,8 +51,8 @@ var SimulateUrls = [
 var Params = {
     //Url:"http://127.0.0.1:8081/data",
     "DataUrl":"https://zyq5945.github.io/DXY-COVID-19-Data-Arrange-DJSON/data",
-    "MinDay": 0,
-    "MaxDay": 90,
+    "MinDay": "",
+    "MaxDay": "",
     "DaysOfTreatment": 18,
     "Width": "100%",
     "Height": 600,

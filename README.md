@@ -72,7 +72,7 @@ location /data {
 
 ### 3.3 [2003年中国SARS（非典）数据](https://zyq5945.github.io/zyq5945/blog_10.html)
 
-#### github.io 网站：[https://zyq5945.github.io/SARS-Data-Arrange/china](https://zyq5945.github.io/diseasedataanalysis/overview.html?StartTime=2003/4/22&MinDay=-116&MaxDay=120&DaysOfTreatment=32&DataUrl=https://zyq5945.github.io/SARS-Data-Arrange/china)
+#### github.io 网站：[https://zyq5945.github.io/SARS-Data-Arrange/china](https://zyq5945.github.io/diseasedataanalysis/overview.html?StartTime=2003/4/22&MinDay=&MaxDay=&DaysOfTreatment=32&DataUrl=https://zyq5945.github.io/SARS-Data-Arrange/china)
 
 #### github.com 仓库：https://raw.githubusercontent.com/zyq5945/SARS-Data-Arrange/master/china
 

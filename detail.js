@@ -69,8 +69,8 @@ var Params = {
     Name: "湖北",
     Parents: "湖北,广东",
     Children: "湖北-荆门,湖北-襄阳,广东-广州,广东-深圳",
-    "MinDay": 0,
-    "MaxDay": 90,
+    "MinDay": "",
+    "MaxDay": "",
     "DaysOfTreatment": 18,
     "A1": 0,
     "A2": 0,
@@ -116,7 +116,7 @@ function simulateDeadFunc(x, params) {
     return y <0 ?0: y;
 }
 
-function createSimulateData(xMin, xMax, xStep, params) {
+function createSimulateDataByFun(xMin, xMax, xStep, params) {
     var xSize = (xMax - xMin) / xStep;
     var ret = Array.from({length: xSize},(z, i) => {
             var x = xMin + xStep * i;
@@ -219,7 +219,7 @@ function initD3Tip(svg, optional, x, y, cb) {
 
 }
 
-function simpleShow(root, data1, data2, group, groupIndex, params, sCount, cb_line, cb_legend) {
+function simpleShow(root, data1, data2, group, groupIndex, params, cb_line, cb_legend) {
 
   var key = group.title;
   var yNames = group.data.map(x=> x.data);
@@ -239,21 +239,29 @@ function simpleShow(root, data1, data2, group, groupIndex, params, sCount, cb_li
   var xName = 'TimeOffset';
   var xNames = [xName];
 
-  function checkDay(d) {
-    var v = d[xName];
-    return  v >= params.MinDay && v <= params.MaxDay;
+  function createCheckDay(params) {
+    var minValid = isValidNum(params.MinDay);
+    var maxValid = isValidNum(params.MaxDay);
+
+    return function(d) {
+        var v = d[xName];
+        if (minValid && v < params.MinDay) {
+            return false;
+        }
+        if (maxValid && v > params.MaxDay) {
+            return false;
+        }
+
+        return  true;
+    }
   }
+
+  var checkDay = createCheckDay(params);
 
   data1 = data1.map(x=> x.filter(checkDay));
   data2 = data2.map(x=> x.filter(checkDay));
 
   var allData = data1.concat(data2);
-  data1.forEach(x=> x.forEach(y =>Object.assign(y, DataItem)));
-  if (data2.length == 1 ){
-    var Count = Object.assign({Count:sCount[0]});
-    data2.forEach(x=> x.forEach(y =>Object.assign(y, Count)));
-  }
-
 
   var xx1r = [allMin2(allData, xNames), allMax2(allData, xNames)];
   var xx1 = d3.scaleLinear()
@@ -379,6 +387,38 @@ function getAllUrls() {
     return ret.map(x=> getUrl(x));
 }
 
+function createAllSimulateData(data, params) {
+    var minDataX = allMin2(data, ['TimeOffset']);
+    var maxDataX = allMax2(data, ['TimeOffset']);
+    var minDay = params.MinDay || minDataX;
+    var maxDay = params.MaxDay || maxDataX + (maxDataX - minDay) * 0.1;
+
+    var sData = [createSimulateDataByFun(minDay, maxDay, 0.5, params)];
+    var dataItem = Object.assign({}, DataItem, DataItem2);
+    sData.forEach(x=> x.forEach(y =>Object.assign(y, dataItem)));
+    var sCount = sData.map(x => {
+        return {
+            MinConfirmedCount : allMin(x, ['ConfirmedCount']),
+            MinCuredCount : allMin(x, ['CuredCount']),
+            MinDeadCount : allMin(x, ['DeadCount']),
+            MinTreatingCount : allMin(x, ['TreatingCount']),
+            MinDeadDivideCured : allMin(x, ['DeadDivideCured']),
+            MinCuredDivideDead : allMin(x, ['CuredDivideDead']),
+            MaxConfirmedCount : allMax(x, ['ConfirmedCount']),
+            MaxCuredCount : allMax(x, ['CuredCount']),
+            MaxDeadCount : allMax(x, ['DeadCount']),
+            MaxTreatingCount : allMax(x, ['TreatingCount']),
+            MaxDeadDivideCured : allMax(x, ['DeadDivideCured']),
+            MaxCuredDivideDead : allMax(x, ['CuredDivideDead']),
+        }
+      });
+
+    var Count ={Count:sCount[0]};
+    sData.forEach(x=> x.forEach(y =>Object.assign(y, Count)));
+
+    return sData;
+}
+
 function createChildren(data) {
 
     var typeGroup = {
@@ -459,38 +499,17 @@ function createChildren(data) {
 
     divSelectClick("ChartSelect", keys, chartSelectClick, storeName);
 
+    data.forEach(x=> x.forEach(y =>Object.assign(y, DataItem)));
+
     var createClick = function() {
         jdx("input").get(params);
         objectValuesToNumber(params);
 
-        var sData = [];
-        var sCount = [];
-        if (params.Type == "Simulate") {
-            sData = [createSimulateData(params.MinDay, params.MaxDay, 0.5, params)];
-            var dataItem = Object.assign({}, DataItem, DataItem2);
-            sData.forEach(x=> x.forEach(y =>Object.assign(y, dataItem)));
-            sCount = sData.map(x => {
-                return {
-                    MinConfirmedCount : allMin(x, ['ConfirmedCount']),
-                    MinCuredCount : allMin(x, ['CuredCount']),
-                    MinDeadCount : allMin(x, ['DeadCount']),
-                    MinTreatingCount : allMin(x, ['TreatingCount']),
-                    MinDeadDivideCured : allMin(x, ['DeadDivideCured']),
-                    MinCuredDivideDead : allMin(x, ['CuredDivideDead']),
-                    MaxConfirmedCount : allMax(x, ['ConfirmedCount']),
-                    MaxCuredCount : allMax(x, ['CuredCount']),
-                    MaxDeadCount : allMax(x, ['DeadCount']),
-                    MaxTreatingCount : allMax(x, ['TreatingCount']),
-                    MaxDeadDivideCured : allMax(x, ['DeadDivideCured']),
-                    MaxCuredDivideDead : allMax(x, ['CuredDivideDead']),
-                }
-              });
-        }
-
+        var sData = params.Type != "Simulate"?[]:createAllSimulateData(data, params);
 
         clearClick();
 
-        groups.forEach((group, groupIndex) => simpleShow(root, data, sData, group, groupIndex, params, sCount, cb_line, cb_legend));
+        groups.forEach((group, groupIndex) => simpleShow(root, data, sData, group, groupIndex, params, cb_line, cb_legend));
 
         chartSelectClick(window[storeName]);
     };
