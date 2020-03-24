@@ -41,3 +41,11 @@ iframe {
 input[name="DataUrl"] {
     width :380px;
 }
+
+.divFilter label {
+    display: inline-block;
+}
+
+.textGray {
+    color: #A9A9A9
+}
