@@ -70,8 +70,8 @@ var Tables = [];
 
 function fetch_data(data) {
 
-    Tables.forEach(x=> x.destroy());
-    Tables.length = 0;
+    window.Tables.forEach(x=> x.destroy());
+    window.Tables.length = 0;
 
     function fmtRate(tds, index, cols, data) {
         var len = index+3;
@@ -121,16 +121,20 @@ function fetch_data(data) {
 
     function createTableDrawCb(n) {
         return function () {
-            var table = Tables[n];
+            var table = window.Tables[n];
             if (table) {
                 table.draw();
             }
         }
     };
+
     var names = dataLastParents.map(x=> x.ParentName).sort(nameCompare);
     divSelectClick("LastParentsName", names, createTableDrawCb(1), "LastParentsName");
     names = arrayUnique(dataLastChildren.map(x=> x.ParentName)).sort(nameCompare);
     divSelectClick("LastChildrenName", names, createTableDrawCb(2), "LastChildrenName");
+
+    divFilterClick("LastParentsFilter", createTableDrawCb(1), "LastParentsFilter");
+    divFilterClick("LastChildrenFilter", createTableDrawCb(2), "LastChildrenFilter");
 
 
     var tbl_order = 3;
@@ -170,7 +174,28 @@ function fetch_data(data) {
         data : dataLastChildren,
         createdRow : createdRow(columns, tbl_order, tbl_offset)});
 
-    Tables = [table_tps, table_lps, table_lcs];
+    window.Tables = [table_tps, table_lps, table_lcs];
+
+    function highlightDivName(table, divName) {
+        table.on("draw", function() {
+            var names = arrayUnique(table.rows({search:'applied'}).data(), x=> x.ParentName);
+            $(`${divName} input[type='checkbox']`).each(function() {
+                var isHighlight = names.includes(this.value);
+                var node =  $(this.nextSibling);
+                if (isHighlight) {
+                    node.removeClass("textGray");
+                }
+                else {
+                    node.addClass("textGray");
+                }
+            })
+        })
+
+        table.draw();
+    }
+
+    highlightDivName(table_lps, "#LastParentsName");
+    highlightDivName(table_lcs, "#LastChildrenName");
 
     $("tbody").off("click",'tr');
 
@@ -273,21 +298,69 @@ function loadClick() {
     Storage.set("cfg", Params);
 }
 
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var id = $(settings.nTable).attr("name");
-        var names = window[id];
-        if (!names) {
-            return true;
-        }
-        var name = data[2];
 
-        if (names.includes(name))
-        {
-            return true;
-        }
-        return false;
+function tableValueFilter( settings, data, dataIndex ) {
+    var table = $(settings.nTable);
+    var id = table.data("myfilter");
+    var columns = window[table.data("mycolumns")];
+    if (!id || !columns ) {
+        return true;
     }
+    var obj = window[id] || {};
+    for (var key in obj) {
+        var val = obj[key];
+        if (!isValidNum(val)) {
+            continue;
+        }
+
+        //val = val * 1.0;
+
+        if (key.lastIndexOf("Rate") !=-1) {
+            val = val / 100.0;
+        }
+
+        var attr = key.substr(3);
+        var idx = columns.findIndex(x=> x.data == attr);
+
+        var dataVal = data[idx];
+        if (key.startsWith("Min")) {
+            if (dataVal < val) {
+                return false;
+            }
+        }
+        else {
+            if (dataVal > val) {
+                return false;
+            }
+        }
+
+    }
+
+    return true;
+}
+
+
+function tableNameFilter( settings, data, dataIndex ) {
+    var id = $(settings.nTable).attr("name");
+    var names = window[id];
+    if (!names) {
+        return true;
+    }
+    var name = data[2];
+
+    if (names.includes(name))
+    {
+        return true;
+    }
+    return false;
+}
+
+$.fn.dataTable.ext.search.push(
+    tableNameFilter,
+);
+
+$.fn.dataTable.ext.search.push(
+    tableValueFilter,
 );
 
 
@@ -308,7 +381,9 @@ function init() {
         detailClick(type);
     });
     $(".btnClsSel").click(function() {
-        $("tr").removeClass('selected');
+        Tables.forEach(x=> {
+            $(x.rows('.selected').nodes()).removeClass('selected')
+        });
     });
 
     chkFrame.click(function() {

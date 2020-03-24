@@ -33,7 +33,7 @@
         <span class="label">仿真治疗天数: </span>
         <input class="value" name="DaysOfTreatment" />&nbsp;
         <span class="label">图形宽度: </span>
-        <input class="value" name="Width" />&nbsp;
+        <input class="value" name="Width" />
         <span class="label">图形高度: </span>
         <input class="value" name="Height" />
         <button id="btnLoad" accesskey="Q">加载数据(<span class="hotKey">Q</span>)</button>
@@ -62,7 +62,84 @@
             <button class="btnUnSelect">全 消</button>
             <button class="btnReverse">反 选</button>
         </div>
-        <table id="LastParents" name="LastParentsName" class="display" style="width:100%"  data-page-length="25" >
+        <div id="LastParentsFilter" class="divFilter">
+            <label>
+                <span class="label">最小确诊数: </span>
+                <input class="value" name="MinParentConfirmedCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大确诊数: </span>
+                <input class="value" name="MaxParentConfirmedCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小康复数: </span>
+                <input class="value" name="MinParentCuredCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大康复数: </span>
+                <input class="value" name="MaxParentCuredCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小死亡数: </span>
+                <input class="value" name="MinParentDeadCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大死亡数: </span>
+                <input class="value" name="MaxParentDeadCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小在治数: </span>
+                <input class="value" name="MinParentTreatingCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大在治数: </span>
+                <input class="value" name="MaxParentTreatingCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小康复率: </span>
+                <input class="value" name="MinParentCuredRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大康复率: </span>
+                <input class="value" name="MaxParentCuredRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小死亡率: </span>
+                <input class="value" name="MinParentDeadRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大死亡率: </span>
+                <input class="value" name="MaxParentDeadRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小在治率: </span>
+                <input class="value" name="MinParentTreatingRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大在治率: </span>
+                <input class="value" name="MaxParentTreatingRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小死亡除康复: </span>
+                <input class="value" name="MinParentDeadDivideCured"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大死亡除康复: </span>
+                <input class="value" name="MaxParentDeadDivideCured"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小康复除死亡: </span>
+                <input class="value" name="MinParentCuredDivideDead"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大康复除死亡: </span>
+                <input class="value" name="MaxParentCuredDivideDead"/>&nbsp;
+            </label>
+
+            <button class="filter" >数据筛选</button>
+            <button class="reset" >筛选重置</button>
+        </div>
+        <table id="LastParents" name="LastParentsName" data-myfilter="LastParentsFilter" data-mycolumns="Columns_Parent" class="display" style="width:100%"  data-page-length="25" >
             <caption> 最后更新地区数据 </caption>
         </table>
         <br/>
@@ -72,7 +149,84 @@
             <button class="btnUnSelect">全 消</button>
             <button class="btnReverse">反 选</button>
         </div>
-        <table id="LastChildren" name="LastChildrenName" class="display" style="width:100%" data-page-length="25" >
+        <div id="LastChildrenFilter" class="divFilter">
+                        <label>
+                <span class="label">最小确诊数: </span>
+                <input class="value" name="MinChildConfirmedCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大确诊数: </span>
+                <input class="value" name="MaxChildConfirmedCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小康复数: </span>
+                <input class="value" name="MinChildCuredCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大康复数: </span>
+                <input class="value" name="MaxChildCuredCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小死亡数: </span>
+                <input class="value" name="MinChildDeadCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大死亡数: </span>
+                <input class="value" name="MaxChildDeadCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小在治数: </span>
+                <input class="value" name="MinChildTreatingCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大在治数: </span>
+                <input class="value" name="MaxChildTreatingCount"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小康复率: </span>
+                <input class="value" name="MinChildCuredRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大康复率: </span>
+                <input class="value" name="MaxChildCuredRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小死亡率: </span>
+                <input class="value" name="MinChildDeadRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大死亡率: </span>
+                <input class="value" name="MaxChildDeadRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小在治率: </span>
+                <input class="value" name="MinChildTreatingRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大在治率: </span>
+                <input class="value" name="MaxChildTreatingRate"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小死亡除康复: </span>
+                <input class="value" name="MinChildDeadDivideCured"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大死亡除康复: </span>
+                <input class="value" name="MaxChildDeadDivideCured"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最小康复除死亡: </span>
+                <input class="value" name="MinChildCuredDivideDead"/>&nbsp;
+            </label>
+            <label>
+                <span class="label">最大康复除死亡: </span>
+                <input class="value" name="MaxChildCuredDivideDead"/>&nbsp;
+            </label>
+
+            <button class="filter" >数据筛选</button>
+            <button class="reset" >筛选重置</button>
+        </div>
+        <table id="LastChildren" name="LastChildrenName" data-myfilter="LastChildrenFilter" data-mycolumns="Columns_Child" class="display" style="width:100%" data-page-length="25" >
             <caption> 最后更新子地区数据 </caption>
         </table>
         <br/>

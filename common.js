@@ -213,3 +213,38 @@ function divSelectClick(id, names, cb, storeName = null) {
 
     node.selectAll(`input[type='checkbox']`).on("click", reCall);
 }
+
+
+function initFilterStatus(parent, storeName){
+    var obj = Storage.get(storeName, {});
+    window[storeName] = obj;
+    jdx(parent).set(obj);
+
+    function changeClick() {
+        jdx(parent).get(obj);
+        objectValuesToNumber(obj);
+        Storage.set(storeName, obj);
+        //window[storeName] = obj;
+        return obj;
+    }
+
+    return changeClick;
+}
+
+function divFilterClick(id, cb, storeName) {
+    var cc = initFilterStatus(id, storeName);
+
+    function reCall() {
+        var data = cc();
+        cb.call(this, data);
+    };
+
+    var node = d3.select(`#${id}`);
+    var allInput = node.selectAll("input");
+    allInput.on("change", reCall);
+    node.select(".filter").on("click", reCall);
+    node.select(".reset").on("click", function() {
+        allInput.property("value", "");
+        reCall.call(this);
+    });
+}
