@@ -17,15 +17,15 @@ var TypeSimulate = [
         {title: "死亡率", data:"DeadRate"},
         {title: "在治率", data:"TreatingRate"},
         ]},
+    {title: "概率推算", data:[
+        {title: "推算康复率", data:"CuredRateEx"},
+        {title: "推算死亡率", data:"DeadRateEx"},
+        ]},
     {title: "死亡除康复", data:[
         {title: "死亡除康复", data:"DeadDivideCured"},
         ]},
     {title: "康复除死亡", data:[
         {title: "康复除死亡", data:"CuredDivideDead"},
-        ]},
-    {title: "康复与死亡标准化", data:[
-        {title: "死亡除康复标准化", data:"DeadDivideCuredNorm"},
-        {title: "康复除死亡标准化", data:"CuredDivideDeadNorm"},
         ]},
     {title: "标准化", data:[
         {title: "确诊标准化", data:"ConfirmedNorm"},
@@ -49,14 +49,14 @@ var TypeCompare = [
     {title: "康复率", data:[{title: "", data:"CuredRate"}]},
     {title: "死亡率", data:[{title: "", data:"DeadRate"}]},
     {title: "在治率", data:[{title: "", data:"TreatingRate"}]},
+    {title: "推算康复率", data:[{title: "", data:"CuredRateEx"}]},
+    {title: "推算死亡率", data:[{title: "", data:"DeadRateEx"}]},
     {title: "死亡除康复", data:[{title: "", data:"DeadDivideCured"}]},
     {title: "康复除死亡", data:[{title: "", data:"CuredDivideDead"}]},
     {title: "确诊标准化", data:[{title: "", data:"ConfirmedNorm"}]},
     {title: "康复标准化", data:[{title: "", data:"CuredNorm"}]},
     {title: "死亡标准化", data:[{title: "", data:"DeadNorm"}]},
     {title: "在治标准化", data:[{title: "", data:"TreatingNorm"}]},
-    {title: "死亡除康复标准化", data:[{title: "", data:"DeadDivideCuredNorm"}]},
-    {title: "康复除死亡标准化", data:[{title: "", data:"CuredDivideDeadNorm"}]},
     {title: "总确诊标准化", data:[{title: "", data:"TatalConfirmedNorm"}]},
     {title: "总康复标准化", data:[{title: "", data:"TatalCuredNorm"}]},
     {title: "总死亡标准化", data:[{title: "", data:"TatalDeadNorm"}]},

@@ -81,12 +81,12 @@ DataItem2.TreatingNorm = function(v) {
     return valueNorm(this.Get("TreatingCount") ,this.Count.MinTreatingCount, this.Count.MaxTreatingCount);
 }
 
-DataItem2.DeadDivideCuredNorm = function(v) {
-    return valueNorm(this.Get("DeadDivideCured") ,this.Count.MinDeadDivideCured, this.Count.MaxDeadDivideCured);
+DataItem2.DeadRateEx = function(v) {
+    return valueCalcRate(this.Get("DeadDivideCured"));
 }
 
-DataItem2.CuredDivideDeadNorm = function(v) {
-    return valueNorm(this.Get("CuredDivideDead") ,this.Count.MinCuredDivideDead, this.Count.MaxCuredDivideDead);
+DataItem2.CuredRateEx = function(v) {
+    return valueCalcRate(this.Get("CuredDivideDead"));
 }
 
 //DataItem.TatalConfirmedNorm = function(v) {

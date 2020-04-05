@@ -99,6 +99,14 @@ function valueNorm(v, vMin, vMax) {
     return r;
 }
 
+function valueCalcRate(v) {
+    var r = Number.NaN;
+    if (isValidNum(v)) {
+        r = v / (v +1.0);
+    }
+    return r;
+}
+
 // https://blog.csdn.net/qq_39408204/article/details/90438390
 var Storage = {
 

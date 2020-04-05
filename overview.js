@@ -10,8 +10,8 @@ var Columns_Parent =[
     { "title":"康复率", "data": "ParentCuredRate" },
     { "title":"死亡率", "data": "ParentDeadRate" },
     { "title":"在治率", "data": "ParentTreatingRate" },
-    { "title":"死亡除康复", "data": "ParentDeadDivideCured" },
-    { "title":"康复除死亡", "data": "ParentCuredDivideDead" },
+    { "title":"推算康复率", "data": "ParentCuredRateEx" },
+    { "title":"推算死亡率", "data": "ParentDeadRateEx" },
 ];
 
 
@@ -27,8 +27,8 @@ var Columns_Child =[
     { "title":"康复率", "data": "ChildCuredRate" },
     { "title":"死亡率", "data": "ChildDeadRate" },
     { "title":"在治率", "data": "ChildTreatingRate" },
-    { "title":"死亡除康复", "data": "ChildDeadDivideCured" },
-    { "title":"康复除死亡", "data": "ChildCuredDivideDead" },
+    { "title":"推算康复率", "data": "ChildCuredRateEx" },
+    { "title":"推算死亡率", "data": "ChildDeadRateEx" },
 ];
 
 var SelectMsg = "请点击选择一些数据，再点击相应操作!";
@@ -74,7 +74,7 @@ function fetch_data(data) {
     window.Tables.length = 0;
 
     function fmtRate(tds, index, cols, data) {
-        var len = index+3;
+        var len = index+5;
         for (var i=index; i<len; i++) {
             var v = data[cols[i].data];
             if (isValidNum(v)) {
@@ -104,7 +104,7 @@ function fetch_data(data) {
     function createdRow(columns, tbl_order , tbl_offset) {
 
         var idx = tbl_order + tbl_offset;
-        var idxs = [0, idx + 3, idx + 4];
+        var idxs = [0];
         return function(row, data, index) {
             var tds = $('td', row);
             fmtRate(tds, idx, columns, data);
