@@ -58,9 +58,9 @@ function jqueryBatchAjax(urls, success, error = null) {
 }
 
 function isValidNum(v) {
-    return v != ""
-        && v != null
-        && v != undefined
+    return v !== ""
+        && v !== null
+        && v !== undefined
         && !isNaN(v)
         && isFinite(v);
 }

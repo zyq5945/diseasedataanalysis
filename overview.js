@@ -219,7 +219,7 @@ function fetch_data(data) {
         },
         error => {
             $("button[name='Simulate']").attr("disabled",true);
-            alert(SimulateErrorMsg + error);
+            //alert(SimulateErrorMsg + error);
             //alert(SimulateErrorMsg);
         });
 
@@ -363,6 +363,7 @@ $.fn.dataTable.ext.search.push(
     tableValueFilter,
 );
 
+$.fn.dataTable.ext.errMode = 'none';
 
 function init() {
 
