@@ -61,18 +61,6 @@ DataItem2.CuredNorm = function(v) {
     return valueNorm(this.Get("CuredCount") ,this.Count.MinCuredCount, this.Count.MaxCuredCount);
 }
 
-DataItem2.ConfirmedNorm = function(v) {
-    return valueNorm(this.Get("ConfirmedCount") ,this.Count.MinConfirmedCount, this.Count.MaxConfirmedCount);
-}
-
-DataItem2.ConfirmedNorm = function(v) {
-    return valueNorm(this.Get("ConfirmedCount") ,this.Count.MinConfirmedCount, this.Count.MaxConfirmedCount);
-}
-
-DataItem2.ConfirmedNorm = function(v) {
-    return valueNorm(this.Get("ConfirmedCount") ,this.Count.MinConfirmedCount, this.Count.MaxConfirmedCount);
-}
-
 DataItem2.DeadNorm = function(v) {
     return valueNorm(this.Get("DeadCount") ,this.Count.MinDeadCount, this.Count.MaxDeadCount);
 }
@@ -82,11 +70,11 @@ DataItem2.TreatingNorm = function(v) {
 }
 
 DataItem2.DeadRateEx = function(v) {
-    return valueCalcRate(this.Get("DeadDivideCured"));
+    return valueCalcRate(this.Get("DeadCount"), this.Get("CuredCount"));
 }
 
 DataItem2.CuredRateEx = function(v) {
-    return valueCalcRate(this.Get("CuredDivideDead"));
+    return valueCalcRate(this.Get("CuredCount"), this.Get("DeadCount"));
 }
 
 //DataItem.TatalConfirmedNorm = function(v) {

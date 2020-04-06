@@ -99,10 +99,10 @@ function valueNorm(v, vMin, vMax) {
     return r;
 }
 
-function valueCalcRate(v) {
+function valueCalcRate(v, v1) {
     var r = Number.NaN;
     if (isValidNum(v)) {
-        r = v / (v +1.0);
+        r = valueDiv(v, v+v1);
     }
     return r;
 }
